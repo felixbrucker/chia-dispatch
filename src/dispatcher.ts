@@ -31,13 +31,11 @@ export class Dispatcher {
     const logger = this.logger.getChildLogger({ name: `Dispatcher | ${wallet.name}` })
     const apiClient = new Wallet(wallet.connectionOptions)
 
-    let isReachable = await apiClient.isReachable()
+    const isReachable = await apiClient.isReachable()
     if (!isReachable) {
-      logger.info(`Wallet is unreachable, waiting for it to become reachable ..`)
-    }
-    while (!isReachable) {
-      await sleep(10 * 1000)
-      isReachable = await apiClient.isReachable()
+      logger.info(`Wallet is unreachable, skipping ..`)
+
+      return
     }
 
     let syncStatus = await apiClient.getSyncStatus()
