@@ -77,6 +77,9 @@ export class Dispatcher {
     if (amountToSend.isLessThan(minimumAmount) || amountToSend.isLessThanOrEqualTo(0)) {
       return
     }
+    if (wallet.sendTo.maximumAmount !== undefined) {
+      amountToSend = BigNumber.minimum(amountToSend, wallet.sendTo.maximumAmount)
+    }
 
     logger.info(`Sending ${amountToSend} ${wallet.ticker} to ${wallet.sendTo.address} ..`)
     let transaction = await apiClient.sendTransaction({

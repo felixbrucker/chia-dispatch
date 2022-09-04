@@ -78,5 +78,6 @@ export interface WalletConfig {
 interface SendingOptions {
   address: string
   minimumAmount?: number
+  maximumAmount?: number
   multiplesOf?: number
 }
