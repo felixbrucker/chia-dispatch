@@ -7,6 +7,7 @@ import BigNumber from 'bignumber.js'
 
 export class Dispatcher {
   private readonly logger = make({ name: 'Dispatcher' })
+  private readonly isDispatching: Map<string, boolean> = new Map<string, boolean>()
 
   public constructor(private readonly config: Config) {}
 
@@ -19,10 +20,16 @@ export class Dispatcher {
   private async dispatch(): Promise<void> {
     const walletsToDispatch = this.config.wallets.filter(wallet => !wallet.disabled)
     await Promise.all(walletsToDispatch.map(async wallet => {
+      if (this.isDispatching.get(wallet.name)) {
+        return
+      }
+      this.isDispatching.set(wallet.name, true)
       try {
         await this.dispatchWallet(wallet)
       } catch (err) {
         this.logger.error(`Error while dispatching wallet ${wallet.name}: ${err.message}`)
+      } finally {
+        this.isDispatching.set(wallet.name, false)
       }
     }))
   }
