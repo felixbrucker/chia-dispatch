@@ -8,6 +8,7 @@ import BigNumber from 'bignumber.js'
 export class Dispatcher {
   private readonly logger = make({ name: 'Dispatcher' })
   private readonly isDispatching: Map<string, boolean> = new Map<string, boolean>()
+  private readonly isUnreachable: Map<string, boolean> = new Map<string, boolean>()
 
   public constructor(private readonly config: Config) {}
 
@@ -40,10 +41,14 @@ export class Dispatcher {
 
     const isReachable = await apiClient.isReachable()
     if (!isReachable) {
-      logger.info(`Wallet is unreachable, skipping ..`)
+      if (!this.isUnreachable.get(wallet.name)) {
+        this.isUnreachable.set(wallet.name, true)
+        logger.info(`Wallet is unreachable, skipping ..`)
+      }
 
       return
     }
+    this.isUnreachable.set(wallet.name, false)
 
     let syncStatus = await apiClient.getSyncStatus()
     if (syncStatus.syncing || !syncStatus.synced) {
