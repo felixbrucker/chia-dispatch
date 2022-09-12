@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "author": "Felix Brucker <felix@felixbrucker.com>",
     "scripts": {
-        "start": "node ./dist/src/main.js",
+        "start": "node ./dist/main.js",
         "build": "tsc"
     },
     "dependencies": {
