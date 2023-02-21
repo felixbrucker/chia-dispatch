@@ -10,6 +10,7 @@
         "axios": "^0.27.2",
         "bignumber.js": "^9.1.0",
         "json-bigint": "^1.0.0",
+        "js-yaml": "^4.1.0",
         "tslog": "^3.3.4"
     },
     "devDependencies": {
