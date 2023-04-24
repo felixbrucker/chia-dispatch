@@ -14,7 +14,7 @@ export class Dispatcher {
 
   public async init() {
     await this.dispatch()
-    setInterval(this.dispatch.bind(this), 10 * 60 * 1000)
+    setInterval(this.dispatch.bind(this), this.config.dispatchIntervalInSeconds * 1000)
     this.logger.info('Initialized')
   }
 

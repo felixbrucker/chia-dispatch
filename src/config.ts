@@ -22,6 +22,10 @@ export class Config {
     return this.config.wallets || [];
   }
 
+  public get dispatchIntervalInSeconds(): number {
+    return this.config.dispatchIntervalInSeconds || 10 * 60
+  }
+
   private async load() {
     let file: string | Buffer
     try {
@@ -63,6 +67,7 @@ export class Config {
 
 interface ConfigInterface {
   wallets: WalletConfig[]
+  dispatchIntervalInSeconds?: number
 }
 
 export interface WalletConfig {
