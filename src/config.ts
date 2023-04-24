@@ -26,6 +26,10 @@ export class Config {
     return this.config.dispatchIntervalInSeconds || 10 * 60
   }
 
+  public get waitForTransactionToConfirm(): boolean {
+    return this.config.waitForTransactionToConfirm ?? true
+  }
+
   private async load() {
     let file: string | Buffer
     try {
@@ -68,6 +72,7 @@ export class Config {
 interface ConfigInterface {
   wallets: WalletConfig[]
   dispatchIntervalInSeconds?: number
+  waitForTransactionToConfirm?: boolean
 }
 
 export interface WalletConfig {

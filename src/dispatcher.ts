@@ -99,10 +99,10 @@ export class Dispatcher {
       amount: CurrencyAmount.from(amountToSend, { decimalPlaces: wallet.decimalPlaces }).toSmallestUnit().toNumber(),
     })
 
-    if (!transaction.confirmed) {
+    if (!transaction.confirmed && this.config.waitForTransactionToConfirm) {
       logger.info(`Waiting for transaction to confirm ..`)
     }
-    while (!transaction.confirmed) {
+    while (!transaction.confirmed && this.config.waitForTransactionToConfirm) {
       await sleep(10 * 1000)
       transaction = await apiClient.getTransaction({ transaction_id: transaction.id })
     }
