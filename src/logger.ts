@@ -5,6 +5,7 @@ export function make(options: ISettingsParam = {}): Logger {
     ...options,
     displayFunctionName: false,
     displayFilePath: 'hidden',
+    dateTimeTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   });
 }
 
