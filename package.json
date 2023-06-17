@@ -4,6 +4,7 @@
     "author": "Felix Brucker <felix@felixbrucker.com>",
     "scripts": {
         "start": "node ./dist/main.js",
+        "start:live": "node --require ts-node/register src/main.ts",
         "build": "tsc"
     },
     "dependencies": {
