@@ -1,9 +1,6 @@
-import {Config} from './config'
-import {Dispatcher} from './dispatcher'
+import {Config} from './config.js'
+import {Dispatcher} from './dispatcher.js'
 
-
-(async () => {
-  const config = await Config.make()
-  const dispatcher = new Dispatcher(config)
-  await dispatcher.init()
-})()
+const config = await Config.make()
+const dispatcher = new Dispatcher(config)
+await dispatcher.init()

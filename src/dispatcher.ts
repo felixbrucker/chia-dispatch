@@ -1,12 +1,12 @@
-import {Config, WalletConfig} from './config'
-import {Wallet, WalletType} from './chia-http-api/wallet'
-import {make} from './logger'
-import {sleep} from './util/sleep'
-import {CurrencyAmount} from './currency-amount'
-import BigNumber from 'bignumber.js'
+import {Config, WalletConfig} from './config.js'
+import {Wallet, WalletType} from './chia-http-api/wallet.js'
+import {makeLogger} from './logger.js'
+import {sleep} from './util/sleep.js'
+import {CurrencyAmount} from './currency-amount.js'
+import {BigNumber} from 'bignumber.js'
 
 export class Dispatcher {
-  private readonly logger = make({ name: 'Dispatcher' })
+  private readonly logger = makeLogger({ name: 'Dispatcher' })
   private readonly isDispatching: Map<string, boolean> = new Map<string, boolean>()
   private readonly isUnreachable: Map<string, boolean> = new Map<string, boolean>()
 
@@ -36,7 +36,7 @@ export class Dispatcher {
   }
 
   private async dispatchWallet(wallet: WalletConfig): Promise<void> {
-    const logger = this.logger.getChildLogger({ name: `Dispatcher | ${wallet.name}` })
+    const logger = this.logger.getSubLogger({ name: `Dispatcher | ${wallet.name}` })
     const apiClient = new Wallet(wallet.connectionOptions)
 
     const isReachable = await apiClient.isReachable()

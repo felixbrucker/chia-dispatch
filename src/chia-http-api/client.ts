@@ -1,7 +1,7 @@
-import {Agent} from 'https';
-import {readFileSync} from 'fs';
-import axios, {AxiosError, AxiosInstance} from 'axios';
-import {parse} from 'json-bigint';
+import {Agent} from 'https'
+import {readFileSync} from 'fs'
+import axios, {AxiosError, AxiosInstance} from 'axios'
+import {parse} from 'json-bigint'
 
 export interface ClientOptions {
   url: string,

@@ -1,12 +1,12 @@
-import {Logger, ISettingsParam} from 'tslog';
+import {Logger, ISettingsParam, ILogObj} from 'tslog'
 
-export function make(options: ISettingsParam = {}): Logger {
+export function makeLogger(options: ISettingsParam<ILogObj> = {}): Logger<ILogObj> {
   return new Logger({
     ...options,
-    displayFunctionName: false,
-    displayFilePath: 'hidden',
-    dateTimeTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-  });
+    prettyLogTemplate: '{{dateIsoStr}} {{logLevelName}}\t[{{name}}] ',
+    prettyErrorParentNamesSeparator: ' | ',
+    prettyLogTimeZone: 'local',
+  })
 }
 
-export const defaultLogger = make();
+export const defaultLogger = makeLogger()

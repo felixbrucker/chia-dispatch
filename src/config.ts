@@ -1,13 +1,13 @@
 import YAML from 'js-yaml'
 import fs from 'fs/promises'
-import {make} from './logger'
-import {ClientOptions} from './chia-http-api/client'
+import {makeLogger} from './logger.js'
+import {ClientOptions} from './chia-http-api/client.js'
 import {homedir} from 'os'
 import { join } from 'path'
 
 export class Config {
   private config: Record<string, any> = {}
-  private readonly logger = make({ name: 'Config' })
+  private readonly logger = makeLogger({ name: 'Config' })
 
   private constructor(private readonly configPath: string) {}
 
@@ -19,7 +19,7 @@ export class Config {
   }
 
   public get wallets(): WalletConfig[] {
-    return this.config.wallets || [];
+    return this.config.wallets || []
   }
 
   public get dispatchIntervalInSeconds(): number {
@@ -31,16 +31,16 @@ export class Config {
   }
 
   private async load() {
-    let file: string | Buffer
+    let file: string
     try {
-      file = await fs.readFile(this.configPath)
+      file = await fs.readFile(this.configPath, 'utf-8')
     } catch (err) {
       this.config = Config.defaultConfig
       await this.save()
       this.logger.info(`Default config written to ${this.configPath}, exiting ..`)
       process.exit()
     }
-    this.config = YAML.load(file)
+    this.config = YAML.load(file) as Record<string, any>
   }
 
   private async save() {

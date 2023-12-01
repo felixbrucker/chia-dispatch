@@ -1,6 +1,6 @@
-import BigNumber from 'bignumber.js';
+import {BigNumber} from 'bignumber.js'
 
-import {Client, ClientOptions, RpcResponse} from './client';
+import {Client, ClientOptions, RpcResponse} from './client.js'
 
 export class Wallet extends Client {
   public constructor(options: ClientOptions) {
@@ -12,7 +12,9 @@ export class Wallet extends Client {
       await this.getSyncStatus()
 
       return true
-    } catch (err) {}
+    } catch (err) {
+      // Skip
+    }
 
     return false
   }
@@ -163,5 +165,5 @@ interface SpendBundle {
 
 interface CoinSolution {
   coin: Coin,
-  solution: {},
+  solution: object,
 }

@@ -1,4 +1,4 @@
-import BigNumber from 'bignumber.js';
+import {BigNumber} from 'bignumber.js'
 
 type ConversionOptions = {
   decimalPlaces: number
@@ -13,7 +13,7 @@ export class CurrencyAmount {
     return new CurrencyAmount(new BigNumber(rawValue).shiftedBy(options.decimalPlaces).integerValue(BigNumber.ROUND_FLOOR))
   }
 
-  private constructor(private currencyInSmallestUnit: BigNumber) {}
+  private constructor(private readonly currencyInSmallestUnit: BigNumber) {}
 
   public to(options: ConversionOptions): BigNumber {
     return this.currencyInSmallestUnit.shiftedBy(-options.decimalPlaces)
@@ -24,6 +24,6 @@ export class CurrencyAmount {
   }
 
   public toString(decimalPlaces = 0): string {
-    return this.to({ decimalPlaces }).toString();
+    return this.to({ decimalPlaces }).toString()
   }
 }
